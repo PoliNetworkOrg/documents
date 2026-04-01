@@ -1,0 +1,413 @@
+%% polinetwork-commands.sty
+%% PoliNetwork APS — Custom Commands
+%% Placeholder commands for logo, signature, dates, association data
+%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{polinetwork-commands}[2026/04/01 PoliNetwork Custom Commands]
+
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\RequirePackage{tabularx}
+\RequirePackage{ifthen}
+\RequirePackage{tikz}
+\RequirePackage{calc}
+
+%% ========================================================================
+%% ASSOCIATION DATA — Set these in your document preamble
+%% ========================================================================
+
+\newcommand{\pn@associationname}{PoliNetwork APS}
+\newcommand{\pn@email}{info@polinetwork.org}
+\newcommand{\pn@pec}{polinetwork@pec.it}
+\newcommand{\pn@privacyemail}{privacy@polinetwork.org}
+\newcommand{\pn@website}{https://polinetwork.org}
+\newcommand{\pn@president}{}
+\newcommand{\pn@logopath}{assets/Logo}  % without extension, will try .pdf then .png
+\newcommand{\pn@signaturepath}{}
+
+% Document metadata
+\newcommand{\pn@doctitle}{}
+\newcommand{\pn@docsubtitle}{}
+\newcommand{\pn@docdate}{\today}
+\newcommand{\pn@docprotocol}{}
+\newcommand{\pn@docsubject}{}
+\newcommand{\pn@docrecipient}{}
+\newcommand{\pn@docversion}{}
+
+%% ========================================================================
+%% USER-FACING SETTERS
+%% ========================================================================
+
+\newcommand{\pnAssociationName}[1]{\renewcommand{\pn@associationname}{#1}}
+\newcommand{\pnEmail}[1]{\renewcommand{\pn@email}{#1}}
+\newcommand{\pnPEC}[1]{\renewcommand{\pn@pec}{#1}}
+\newcommand{\pnPrivacyEmail}[1]{\renewcommand{\pn@privacyemail}{#1}}
+\newcommand{\pnWebsite}[1]{\renewcommand{\pn@website}{#1}}
+\newcommand{\pnPresident}[1]{\renewcommand{\pn@president}{#1}}
+\newcommand{\pnLogo}[1]{\renewcommand{\pn@logopath}{#1}}
+\newcommand{\pnSignature}[1]{\renewcommand{\pn@signaturepath}{#1}}
+
+\newcommand{\pnTitle}[1]{\renewcommand{\pn@doctitle}{#1}}
+\newcommand{\pnSubtitle}[1]{\renewcommand{\pn@docsubtitle}{#1}}
+\newcommand{\pnDate}[1]{\renewcommand{\pn@docdate}{#1}}
+\newcommand{\pnProtocol}[1]{\renewcommand{\pn@docprotocol}{#1}}
+\newcommand{\pnSubject}[1]{\renewcommand{\pn@docsubject}{#1}}
+\newcommand{\pnRecipient}[1]{\renewcommand{\pn@docrecipient}{#1}}
+\newcommand{\pnVersion}[1]{\renewcommand{\pn@docversion}{#1}}
+
+%% ========================================================================
+%% MULTILINGUAL SUPPORT (IT / EN)
+%% ========================================================================
+
+\newcommand{\pn@lang}{it}
+\newcommand{\pnLanguage}[1]{\renewcommand{\pn@lang}{#1}}
+
+% Italian strings (default)
+\newcommand{\pn@str@page}{Pagina}
+\newcommand{\pn@str@of}{di}
+\newcommand{\pn@str@subject}{Oggetto}
+\newcommand{\pn@str@to}{Spett.le}
+\newcommand{\pn@str@protocol}{Protocollo}
+\newcommand{\pn@str@date}{Data}
+\newcommand{\pn@str@version}{Versione}
+\newcommand{\pn@str@president}{Il Presidente}
+\newcommand{\pn@str@email}{Email}
+\newcommand{\pn@str@website}{Sito web}
+\newcommand{\pn@str@contents}{Indice}
+
+\newcommand{\pnSetEnglish}{%
+  \renewcommand{\pn@lang}{en}%
+  \renewcommand{\pn@str@page}{Page}%
+  \renewcommand{\pn@str@of}{of}%
+  \renewcommand{\pn@str@subject}{Subject}%
+  \renewcommand{\pn@str@to}{To}%
+  \renewcommand{\pn@str@protocol}{Protocol}%
+  \renewcommand{\pn@str@date}{Date}%
+  \renewcommand{\pn@str@version}{Version}%
+  \renewcommand{\pn@str@president}{The President}%
+  \renewcommand{\pn@str@email}{Email}%
+  \renewcommand{\pn@str@website}{Website}%
+  \renewcommand{\pn@str@contents}{Contents}%
+}
+
+\newcommand{\pnSetItalian}{%
+  \renewcommand{\pn@lang}{it}%
+  \renewcommand{\pn@str@page}{Pagina}%
+  \renewcommand{\pn@str@of}{di}%
+  \renewcommand{\pn@str@subject}{Oggetto}%
+  \renewcommand{\pn@str@to}{Spett.le}%
+  \renewcommand{\pn@str@protocol}{Protocollo}%
+  \renewcommand{\pn@str@date}{Data}%
+  \renewcommand{\pn@str@version}{Versione}%
+  \renewcommand{\pn@str@president}{Il Presidente}%
+  \renewcommand{\pn@str@email}{Email}%
+  \renewcommand{\pn@str@website}{Sito web}%
+  \renewcommand{\pn@str@contents}{Indice}%
+}
+
+%% ========================================================================
+%% HEADER / FOOTER GENERATION
+%% ========================================================================
+
+% Insert the PoliNetwork logo
+\newcommand{\pnInsertLogo}[1][1.2cm]{%
+  \IfFileExists{\pn@logopath.pdf}{%
+    \includegraphics[height=#1]{\pn@logopath.pdf}%
+  }{%
+    \IfFileExists{\pn@logopath.png}{%
+      \includegraphics[height=#1]{\pn@logopath.png}%
+    }{%
+      \IfFileExists{\pn@logopath}{%
+        \includegraphics[height=#1]{\pn@logopath}%
+      }{%
+        \textcolor{pn-text-muted}{\textit{[Logo]}}%
+      }%
+    }%
+  }%
+}
+
+% Wordmark: "PoliNetwork" in Poppins Medium with branded colors  
+\newcommand{\pnWordmark}[1][16pt]{%
+  {%
+    \poppinsfont\fontsize{#1}{#1}\selectfont%
+    \textcolor{pn-primary}{\textbf{P}}%
+    \textcolor{pn-text}{oli}%
+    \textcolor{pn-primary}{\textbf{N}}%
+    \textcolor{pn-text}{etwork}%
+  }%
+}
+
+% Make the document header (logo + association name + contacts)
+\newcommand{\pnMakeHeader}{%
+  \noindent
+  \begin{minipage}[c]{0.15\textwidth}
+    \pnInsertLogo[1.4cm]
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[c]{0.55\textwidth}
+    \pnWordmark[18pt]\\[2pt]
+    {\small\color{pn-text-secondary}Associazione di Promozione Sociale}
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[c]{0.25\textwidth}
+    \raggedleft
+    {\footnotesize\color{pn-text-secondary}%
+      \pn@email\\
+      \pn@website%
+    }
+  \end{minipage}
+  
+  \vspace{2pt}
+  {\color{pn-rule}\rule{\textwidth}{1.5pt}}
+  \vspace{8pt}
+}
+
+% Make a compact header for subsequent pages (used by fancyhdr)
+\newcommand{\pnMakeRunningHeader}{%
+  \pnInsertLogo[0.8cm]%
+  \hspace{6pt}%
+  \pnWordmark[11pt]%
+}
+
+%% ========================================================================
+%% DOCUMENT METADATA BLOCK
+%% ========================================================================
+
+\newcommand{\pnMakeMetadata}{%
+  \vspace{4pt}
+  \noindent
+  \begin{minipage}[t]{0.48\textwidth}
+    \ifthenelse{\equal{\pn@docrecipient}{}}{}{%
+      {\small\color{pn-text-muted}\pn@str@to}\\
+      {\normalsize\pn@docrecipient}\\[6pt]
+    }
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.48\textwidth}
+    \raggedleft\small\color{pn-text-secondary}
+    \ifthenelse{\equal{\pn@docprotocol}{}}{}{%
+      \pn@str@protocol: \pn@docprotocol\\
+    }
+    \pn@str@date: \pn@docdate%
+    \ifthenelse{\equal{\pn@docversion}{}}{}{%
+      \\\pn@str@version: \pn@docversion%
+    }
+  \end{minipage}
+  \vspace{6pt}
+  
+  \ifthenelse{\equal{\pn@docsubject}{}}{}{%
+    \noindent{\small\color{pn-text-muted}\pn@str@subject:}\\[1pt]
+    \noindent{\large\color{pn-text}\textbf{\pn@docsubject}}\\[8pt]
+  }
+}
+
+%% ========================================================================
+%% TITLE PAGE (for reports/legal docs)
+%% ========================================================================
+
+\newcommand{\pnMakeTitlePage}{%
+  \begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    % Logo
+    \pnInsertLogo[3cm]
+    
+    \vspace{1cm}
+    
+    % Wordmark
+    \pnWordmark[28pt]
+    
+    \vspace{0.3cm}
+    {\color{pn-text-secondary}\large Associazione di Promozione Sociale}
+    
+    \vspace{2cm}
+    
+    % Decorative rule
+    {\color{pn-rule}\rule{0.4\textwidth}{2pt}}
+    
+    \vspace{1cm}
+    
+    % Document title
+    \ifthenelse{\equal{\pn@doctitle}{}}{}{%
+      {\Huge\color{pn-text}\textbf{\pn@doctitle}}
+      \vspace{0.5cm}
+    }
+    
+    % Subtitle
+    \ifthenelse{\equal{\pn@docsubtitle}{}}{}{%
+      {\Large\color{pn-text-secondary}\pn@docsubtitle}
+      \vspace{0.5cm}
+    }
+    
+    \vspace{1cm}
+    
+    % Decorative rule
+    {\color{pn-rule}\rule{0.4\textwidth}{2pt}}
+    
+    \vfill
+    
+    % Footer info
+    {\small\color{pn-text-muted}%
+      \ifthenelse{\equal{\pn@docversion}{}}{}{%
+        \pn@str@version~\pn@docversion\quad|\quad%
+      }%
+      \pn@docdate%
+    }
+    
+    \vspace{1cm}
+  \end{titlepage}
+}
+
+%% ========================================================================
+%% CLOSING / SIGNATURE
+%% ========================================================================
+
+\newcommand{\pnClosing}[1][Cordiali saluti,]{%
+  \vspace{1.5cm}
+  \noindent #1
+  
+  \vspace{0.8cm}
+  
+  \noindent
+  \begin{minipage}[t]{0.5\textwidth}
+    \ifthenelse{\equal{\pn@signaturepath}{}}{%
+      % No signature image: leave space for manual signature
+      \vspace{1.5cm}
+    }{%
+      \includegraphics[height=1.5cm]{\pn@signaturepath}\\[2pt]
+    }%
+    \rule{5cm}{0.5pt}\\[2pt]
+    {\small\color{pn-text-secondary}%
+      \ifthenelse{\equal{\pn@president}{}}{%
+        \pn@str@president\\
+        \pn@associationname%
+      }{%
+        \pn@president\\
+        \pn@str@president\\
+        \pn@associationname%
+      }%
+    }
+  \end{minipage}
+}
+
+%% ========================================================================
+%% STYLED SECTION COMMANDS
+%% ========================================================================
+
+% Primary section heading with blue accent bar
+\newcommand{\pnSection}[1]{%
+  \vspace{16pt}%
+  \noindent%
+  {\color{pn-rule}\rule{4pt}{14pt}}%
+  \hspace{8pt}%
+  {\Large\color{pn-text}\headlinefont\textbf{#1}}%
+  \par\vspace{6pt}%
+}
+
+% Subsection
+\newcommand{\pnSubsection}[1]{%
+  \vspace{10pt}%
+  \noindent%
+  {\large\color{pn-primary}\headlinefont #1}%
+  \par\vspace{4pt}%
+}
+
+%% ========================================================================
+%% HIGHLIGHT BOX (for important notes)
+%% ========================================================================
+
+\newcommand{\pnHighlightBox}[1]{%
+  \vspace{8pt}
+  \noindent
+  \begin{tikzpicture}
+    \node[
+      draw=pn-sky-300,
+      fill=pn-sky-100,
+      rounded corners=4pt,
+      inner sep=10pt,
+      text width=\textwidth-24pt,
+      align=left
+    ] {%
+      \color{pn-text}#1%
+    };
+  \end{tikzpicture}
+  \vspace{8pt}
+}
+
+% Inline highlight
+\newcommand{\pnHighlight}[1]{%
+  \textcolor{pn-primary}{\textbf{#1}}%
+}
+
+%% ========================================================================
+%% HORIZONTAL RULE
+%% ========================================================================
+
+\newcommand{\pnRule}{%
+  \vspace{6pt}
+  \noindent{\color{pn-rule}\rule{\textwidth}{1pt}}
+  \vspace{6pt}
+}
+
+%% ========================================================================
+%% ARTICLE / CLAUSE NUMBERING (for legal documents)
+%% ========================================================================
+
+\newcounter{pn@article}
+\newcounter{pn@clause}[pn@article]
+
+\newcommand{\pnArticle}[1]{%
+  \stepcounter{pn@article}%
+  \vspace{14pt}%
+  \noindent%
+  {\color{pn-rule}\rule{4pt}{14pt}}%
+  \hspace{8pt}%
+  {\Large\color{pn-text}\headlinefont\textbf{Art.\,\thepn@article\quad---\quad#1}}%
+  \par\vspace{6pt}%
+}
+
+\newcommand{\pnClause}[1]{%
+  \stepcounter{pn@clause}%
+  \vspace{6pt}%
+  \noindent%
+  {\color{pn-primary}\thepn@article.\thepn@clause}\hspace{6pt}%
+  #1%
+  \par\vspace{3pt}%
+}
+
+%% ========================================================================
+%% NUMBERED SECTIONS (for privacy policies etc.)
+%% ========================================================================
+
+\newcounter{pn@numsec}
+
+\newcommand{\pnNumberedSection}[1]{%
+  \stepcounter{pn@numsec}%
+  \vspace{14pt}%
+  \noindent%
+  {\color{pn-rule}\rule{4pt}{14pt}}%
+  \hspace{8pt}%
+  {\Large\color{pn-text}\headlinefont\textbf{\thepn@numsec.\quad#1}}%
+  \par\vspace{6pt}%
+}
+
+%% ========================================================================
+%% CONTACT INFO BLOCK (for footer or end of document)
+%% ========================================================================
+
+\newcommand{\pnContactBlock}{%
+  \vspace{12pt}
+  {\color{pn-rule}\rule{\textwidth}{0.5pt}}
+  \vspace{6pt}
+  \begin{center}
+    {\small\color{pn-text-secondary}%
+      \pn@associationname\quad|\quad%
+      \pn@str@email: \pn@email\quad|\quad%
+      PEC: \pn@pec\quad|\quad%
+      \pn@str@website: \pn@website%
+    }
+  \end{center}
+}
+
+\endinput

@@ -1,0 +1,102 @@
+%% polinetwork-colors.sty
+%% PoliNetwork APS — Color Palette
+%% Based on the new branding: Tailwind cyan, sky, blue, slate + rose accents
+%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{polinetwork-colors}[2026/04/01 PoliNetwork Color Palette]
+
+\RequirePackage{xcolor}
+
+%% ========================================================================
+%% PRIMARY PALETTE
+%% ========================================================================
+
+% White (cards, page background)
+\definecolor{pn-white}{HTML}{FFFFFF}
+
+% Slate (dark text / headings)
+\definecolor{pn-slate-900}{HTML}{0F172A}
+\definecolor{pn-slate-800}{HTML}{1E293B}
+\definecolor{pn-slate-700}{HTML}{334155}
+\definecolor{pn-slate-600}{HTML}{475569}
+\definecolor{pn-slate-500}{HTML}{64748B}
+\definecolor{pn-slate-400}{HTML}{94A3B8}
+\definecolor{pn-slate-300}{HTML}{CBD5E1}
+\definecolor{pn-slate-200}{HTML}{E2E8F0}
+\definecolor{pn-slate-100}{HTML}{F1F5F9}
+\definecolor{pn-slate-50}{HTML}{F8FAFC}
+
+% Blue (primary accent)
+\definecolor{pn-blue-900}{HTML}{1E3A5F}
+\definecolor{pn-blue-800}{HTML}{1E40AF}
+\definecolor{pn-blue-700}{HTML}{1D4ED8}
+\definecolor{pn-blue-600}{HTML}{2563EB}
+\definecolor{pn-blue-500}{HTML}{3B82F6}
+\definecolor{pn-blue-400}{HTML}{60A5FA}
+\definecolor{pn-blue-300}{HTML}{93C5FD}
+\definecolor{pn-blue-200}{HTML}{BFDBFE}
+\definecolor{pn-blue-100}{HTML}{DBEAFE}
+
+%% ========================================================================
+%% ACCENT PALETTE
+%% ========================================================================
+
+% Cyan / Teal (accent)
+\definecolor{pn-cyan-700}{HTML}{0E7490}
+\definecolor{pn-cyan-600}{HTML}{0891B2}
+\definecolor{pn-cyan-500}{HTML}{06B6D4}
+\definecolor{pn-cyan-400}{HTML}{22D3EE}
+\definecolor{pn-cyan-300}{HTML}{67E8F9}
+
+% Sky (light accent)
+\definecolor{pn-sky-700}{HTML}{0369A1}
+\definecolor{pn-sky-600}{HTML}{0284C7}
+\definecolor{pn-sky-500}{HTML}{0EA5E9}
+\definecolor{pn-sky-400}{HTML}{38BDF8}
+\definecolor{pn-sky-300}{HTML}{7DD3FC}
+\definecolor{pn-sky-200}{HTML}{BAE6FD}
+\definecolor{pn-sky-100}{HTML}{E0F2FE}
+
+%% ========================================================================
+%% SEMANTIC COLORS
+%% ========================================================================
+
+% Success (green/emerald)
+\definecolor{pn-success}{HTML}{10B981}
+\definecolor{pn-success-dark}{HTML}{059669}
+
+% Error (rose/red)
+\definecolor{pn-error}{HTML}{F43F5E}
+\definecolor{pn-error-dark}{HTML}{E11D48}
+
+% Disabled / muted
+\definecolor{pn-disabled}{HTML}{CBD5E1}
+
+%% ========================================================================
+%% DESIGN ELEMENT COLORS (from SVG assets)
+%% ========================================================================
+
+% Blue shape accent (#51A2FF at 40% opacity)
+\definecolor{pn-shape-blue}{HTML}{51A2FF}
+
+% Teal shape accent (#74D4FF at 40% opacity)
+\definecolor{pn-shape-teal}{HTML}{74D4FF}
+
+% Logo blue
+\definecolor{pn-logo-blue}{HTML}{1055AD}
+\definecolor{pn-logo-ring}{HTML}{20478F}
+
+%% ========================================================================
+%% SEMANTIC ALIASES (for easy use in documents)
+%% ========================================================================
+
+\colorlet{pn-primary}{pn-sky-700}       % Primary brand color
+\colorlet{pn-accent}{pn-sky-300}        % Light accent
+\colorlet{pn-text}{pn-slate-900}        % Main text color
+\colorlet{pn-text-secondary}{pn-slate-600} % Secondary text
+\colorlet{pn-text-muted}{pn-slate-400}  % Muted text
+\colorlet{pn-background}{pn-slate-50}   % Page background tint
+\colorlet{pn-rule}{pn-sky-700}          % Horizontal rules / decorative lines
+\colorlet{pn-link}{pn-sky-700}          % Hyperlink color
+
+\endinput

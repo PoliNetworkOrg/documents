@@ -1,0 +1,85 @@
+%% legal-document.tex
+%% Template generico per documenti legali — PoliNetwork APS
+%% 
+%% Adatto a: statuto, regolamento interno, delibere, atti formali
+%%
+%% Compila con: xelatex legal-document.tex
+%%
+\documentclass[legal]{../core/polinetwork}
+
+%% ====================================================================
+%% DATI DOCUMENTO
+%% ====================================================================
+
+\pnTitle{[Titolo del Documento]}
+\pnSubtitle{[Sottotitolo opzionale]}
+\pnDate{1 aprile 2026}
+\pnVersion{1.0}
+\pnSubject{[Oggetto del documento]}
+\pnProtocol{PN-2026/001}
+
+%% Per documenti in inglese, decommentare:
+% \pnSetEnglish
+
+%% ====================================================================
+
+\begin{document}
+\thispagestyle{firstpage}
+
+\pnMakeHeader
+\pnMakeMetadata
+
+%% ====================================================================
+%% PREMESSA / PREAMBOLO (opzionale)
+%% ====================================================================
+
+% Decommentare se serve una premessa
+% \pnSection{Premessa}
+% Testo della premessa...
+
+%% ====================================================================
+%% ARTICOLI
+%% ====================================================================
+
+\pnArticle{[Titolo articolo 1]}
+
+\pnClause{%
+  [Testo della prima clausola dell'articolo 1.]
+}
+
+\pnClause{%
+  [Testo della seconda clausola dell'articolo 1.]
+}
+
+\pnArticle{[Titolo articolo 2]}
+
+\pnClause{%
+  [Testo della prima clausola dell'articolo 2.]
+}
+
+% Puoi anche usare elenchi all'interno delle clausole:
+\pnClause{%
+  [Introduzione alla clausola con elenco]:
+  \begin{itemize}
+    \item primo punto;
+    \item secondo punto;
+    \item terzo punto.
+  \end{itemize}
+}
+
+\pnArticle{[Titolo articolo 3]}
+
+\pnClause{%
+  [Testo...]
+}
+
+%% ====================================================================
+%% CHIUSURA E FIRMA
+%% ====================================================================
+
+\pnClosing
+
+\vfill
+\pnContactBlock
+
+\end{document}
