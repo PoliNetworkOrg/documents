@@ -21,12 +21,16 @@ XELATEX_FLAGS = -interaction=nonstopmode -halt-on-error
 ROOT_DIR := $(shell pwd)
 OUT_DIR := $(ROOT_DIR)/output
 
+# TEXINPUTS permette a XeLaTeX di trovare i file .cls, .sty, font e assets
+# ovunque si compili — è la "magia" che tiene tutto collegato
+TEXINPUTS_VAL = $(ROOT_DIR)/core:$(ROOT_DIR):
+
 # Macro per compilare un documento (2 passate per riferimenti corretti)
 # Uso: $(call compile,<directory>,<filename senza .tex>)
 define compile
 	@mkdir -p $(OUT_DIR)
-	$(XELATEX) $(XELATEX_FLAGS) -output-directory="$(OUT_DIR)" $(1)/$(2).tex
-	$(XELATEX) $(XELATEX_FLAGS) -output-directory="$(OUT_DIR)" $(1)/$(2).tex
+	TEXINPUTS="$(TEXINPUTS_VAL)" $(XELATEX) $(XELATEX_FLAGS) -output-directory="$(OUT_DIR)" $(1)/$(2).tex
+	TEXINPUTS="$(TEXINPUTS_VAL)" $(XELATEX) $(XELATEX_FLAGS) -output-directory="$(OUT_DIR)" $(1)/$(2).tex
 	@echo "✓ Generato: output/$(2).pdf"
 endef
 

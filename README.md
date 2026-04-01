@@ -58,7 +58,7 @@ Tutti i PDF verranno creati comodamente all'interno della cartella `output/`.
 ### Come creare un nuovo tipo di documento
 
 1. Crea una nuova cartella dentro `documents/` (es. `documents/nuovo-progetto`)
-2. Crea il tuo file `.tex` e usa `\documentclass[legal]{core/polinetwork}`
+2. Crea il tuo file `.tex` e usa `\documentclass[legal]{polinetwork}`
 3. Aggiungi il nuovo documento al `Makefile` seguendo gli esempi già presenti
 4. Esegui `make [nuovo-documento]` dalla root
 
@@ -115,9 +115,9 @@ Tutti i PDF verranno creati comodamente all'interno della cartella `output/`.
 ### 4. Opzioni della classe
 
 ```latex
-\documentclass[legal]{core/polinetwork}   % Documenti legali numerati
-\documentclass[letter]{core/polinetwork}  % Lettere / Layout semplice
-\documentclass[report]{core/polinetwork}  % Include copertina frontale
+\documentclass[legal]{polinetwork}   % Documenti legali numerati
+\documentclass[letter]{polinetwork}  % Lettere / Layout semplice
+\documentclass[report]{polinetwork}  % Include copertina frontale
 ```
 
 ## Palette colori
