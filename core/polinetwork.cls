@@ -12,6 +12,15 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{polinetwork}[2026/04/01 PoliNetwork APS Document Class v1.0]
 
+% Overleaf can end up loading the class more than once when the main file and
+% class/package paths are resolved through different relative paths. Guard
+% against a second load to avoid duplicate command errors.
+\expandafter\ifx\csname pn@classloaded\endcsname\relax
+  \expandafter\gdef\csname pn@classloaded\endcsname{}
+\else
+  \endinput
+\fi
+
 %% ========================================================================
 %% CLASS OPTIONS
 %% ========================================================================
@@ -109,22 +118,7 @@
     \IfFileExists{../assets/site-background-soft.png}{%
       \node[anchor=center, inner sep=0pt]
         at (current page.center)
-        {\includegraphics[width=1.08\paperwidth,height=1.04\paperheight]{../assets/site-background-soft.png}};
-    }{}%
-  \end{tikzpicture}%
-}
-
-%% ========================================================================
-%% PAGE BACKGROUND
-%% ========================================================================
-
-\newcommand{\pnPageBackground}{%
-  \begin{tikzpicture}[remember picture,overlay]
-    \fill[white] (current page.south west) rectangle (current page.north east);
-    \IfFileExists{assets/site-background-soft.png}{%
-      \node[anchor=center, inner sep=0pt]
-        at (current page.center)
-        {\includegraphics[width=1.08\paperwidth,height=1.04\paperheight]{assets/site-background-soft.png}};
+      {\includegraphics[width=1.08\paperwidth,height=1.04\paperheight]{../assets/site-background-soft.png}};
     }{}%
   \end{tikzpicture}%
 }
@@ -228,19 +222,19 @@
   {\Large\poppinsfont\bfseries\color{pn-text}}
   {\thesection\hspace{6pt}}
   {0pt}
-  {}[\vspace{-0.55em}{\color{pn-rule}\rule{\textwidth}{0.8pt}}]
-
+ {}[\vspace{-0.55em}{\color{pn-rule}\rule{\textwidth}{0.8pt}}]
+ 
 \titleformat{\subsection}
   {\large\poppinsfont\bfseries\color{pn-primary}}
   {\thesubsection\hspace{6pt}}
   {0pt}
-  {\phantomsection}
+  {}
 
 \titleformat{\subsubsection}
   {\normalsize\poppinsfont\bfseries\color{pn-text-secondary}}
   {\thesubsubsection\hspace{6pt}}
   {0pt}
-  {\phantomsection}
+  {}
 
 % Spacing
 \titlespacing*{\section}{0pt}{18pt}{8pt}
