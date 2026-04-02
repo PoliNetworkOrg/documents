@@ -60,6 +60,8 @@
 % Graphics
 \RequirePackage{graphicx}
 \RequirePackage{tikz}
+\RequirePackage{eso-pic}
+\usetikzlibrary{calc}
 
 % Tables
 \RequirePackage{tabularx}
@@ -76,7 +78,7 @@
   urlcolor=pn-link,
   citecolor=pn-primary,
   bookmarks=true,
-  bookmarksnumbered=true
+  bookmarksnumbered=false
 ]{hyperref}
 
 % Header/Footer
@@ -95,6 +97,21 @@
 \RequirePackage{polinetwork-commands}
 
 %% ========================================================================
+%% PAGE BACKGROUND
+%% ========================================================================
+
+\newcommand{\pnPageBackground}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[white] (current page.south west) rectangle (current page.north east);
+    \IfFileExists{assets/site-background-soft.png}{%
+      \node[anchor=center, inner sep=0pt]
+        at (current page.center)
+        {\includegraphics[width=1.08\paperwidth,height=1.04\paperheight]{assets/site-background-soft.png}};
+    }{}%
+  \end{tikzpicture}%
+}
+
+%% ========================================================================
 %% FONT CONFIGURATION
 %% ========================================================================
 
@@ -106,10 +123,10 @@
   BoldFont       = *-Variable,
   ItalicFont     = *-Variable-Italic,
   BoldItalicFont = *-Variable-Italic,
-  UprightFeatures= {RawFeature={axis={wght=400}}},
-  BoldFeatures   = {RawFeature={axis={wght=700}}},
-  ItalicFeatures = {RawFeature={axis={wght=400}}},
-  BoldItalicFeatures = {RawFeature={axis={wght=700}}},
+  UprightFeatures= {NamedInstance=Regular},
+  BoldFeatures   = {NamedInstance=Bold},
+  ItalicFeatures = {NamedInstance=Italic},
+  BoldItalicFeatures = {NamedInstance=Bold Italic},
 ]
 
 % Poppins — headlines & wordmark
@@ -137,10 +154,10 @@
   BoldFont       = *-Variable,
   ItalicFont     = *-Variable-Italic,
   BoldItalicFont = *-Variable-Italic,
-  UprightFeatures= {RawFeature={axis={wght=400}}},
-  BoldFeatures   = {RawFeature={axis={wght=700}}},
-  ItalicFeatures = {RawFeature={axis={wght=400}}},
-  BoldItalicFeatures = {RawFeature={axis={wght=700}}},
+  UprightFeatures= {NamedInstance=Regular},
+  BoldFeatures   = {NamedInstance=Bold},
+  ItalicFeatures = {NamedInstance=Italic},
+  BoldItalicFeatures = {NamedInstance=Bold Italic},
 ]
 
 % Set main document fonts
@@ -151,15 +168,18 @@
   BoldFont       = *-Variable,
   ItalicFont     = *-Variable-Italic,
   BoldItalicFont = *-Variable-Italic,
-  UprightFeatures= {RawFeature={axis={wght=400}}},
-  BoldFeatures   = {RawFeature={axis={wght=700}}},
-  ItalicFeatures = {RawFeature={axis={wght=400}}},
-  BoldItalicFeatures = {RawFeature={axis={wght=700}}},
+  UprightFeatures= {NamedInstance=Regular},
+  BoldFeatures   = {NamedInstance=Bold},
+  ItalicFeatures = {NamedInstance=Italic},
+  BoldItalicFeatures = {NamedInstance=Bold Italic},
 ]
 
 % Aliases for use in commands.sty
 \let\headlinefont\poppinsfont
 \let\labelfont\redhattextfont
+
+% Tolleranza per giustificazione testo (riduce Overfull \hbox)
+\tolerance=1000
 
 %% ========================================================================
 %% PARAGRAPH & SPACING
@@ -167,7 +187,9 @@
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
-\onehalfspacing
+\setstretch{1.25}
+\setlength{\emergencystretch}{4em}
+\raggedbottom
 
 % Tolleranza per giustificazione testo (riduce Overfull \hbox)
 \tolerance=1000
@@ -188,19 +210,19 @@
   {\Large\poppinsfont\bfseries\color{pn-text}}
   {\thesection\hspace{6pt}}
   {0pt}
-  {}[\vspace{-0.6em}{\color{pn-rule}\rule{\textwidth}{1pt}}]
+  {\phantomsection}[\vspace{-0.55em}{\color{pn-rule}\rule{\textwidth}{0.8pt}}]
 
 \titleformat{\subsection}
-  {\large\poppinsfont\bfseries\color{pn-text-secondary}}
+  {\large\poppinsfont\bfseries\color{pn-primary}}
   {\thesubsection\hspace{6pt}}
   {0pt}
-  {}
+  {\phantomsection}
 
 \titleformat{\subsubsection}
   {\normalsize\poppinsfont\bfseries\color{pn-text-secondary}}
   {\thesubsubsection\hspace{6pt}}
   {0pt}
-  {}
+  {\phantomsection}
 
 % Spacing
 \titlespacing*{\section}{0pt}{18pt}{8pt}
@@ -241,8 +263,9 @@
 
 % Footer on all pages
 \fancyfoot[L]{%
-  \raisebox{-0.3em}{\pnInsertLogo[0.45cm]}\hspace{4pt}%
-  \pnWordmark[10pt]%
+  \footnotesize\poppinsfont\color{pn-text-secondary}%
+  \raisebox{-0.28em}{\pnInsertLogo[0.38cm]}\hspace{5pt}%
+  {\color{pn-primary}PoliNetwork}
 }
 \fancyfoot[R]{%
   \footnotesize\poppinsfont\color{pn-text-secondary}%
@@ -252,21 +275,22 @@
 % Rule styling
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0.5pt}
-\renewcommand{\footrule}{\vspace*{-8pt}\hbox to\headwidth{\color{pn-rule}\leaders\hrule height \footrulewidth\hfill}\vspace*{8pt}}
-\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\footrule}{\vspace*{-8pt}\hbox to\headwidth{\color{pn-sky-100}\leaders\hrule height \footrulewidth\hfill}\vspace*{8pt}}
 
 % First page style: no running header
 \fancypagestyle{firstpage}{%
   \fancyhf{}
   \renewcommand{\headrulewidth}{0pt}
-  \fancyfoot[C]{%
-    \small\color{pn-text-muted}%
-    \pn@str@page~\thepage~\pn@str@of~\pageref*{LastPage}%
+  \fancyfoot[L]{%
+    \footnotesize\poppinsfont\color{pn-text-secondary}%
+    \raisebox{-0.28em}{\pnInsertLogo[0.38cm]}\hspace{5pt}{\color{pn-primary}PoliNetwork}
   }
   \fancyfoot[R]{%
-    \footnotesize\color{pn-text-muted}%
-    \pn@associationname%
+    \footnotesize\poppinsfont\color{pn-text-muted}%
+    \pn@str@page~\thepage~\pn@str@of~\pageref*{LastPage}%
   }
+  \renewcommand{\footrulewidth}{0.4pt}
+  \renewcommand{\footrule}{\vspace*{-8pt}\hbox to\headwidth{\color{pn-sky-100}\leaders\hrule height \footrulewidth\hfill}\vspace*{8pt}}
 }
 
 % Title page style (no header/footer)
@@ -281,6 +305,7 @@
 %% ========================================================================
 
 \AtBeginDocument{%
+  \AddToShipoutPictureBG{\pnPageBackground}%
   \hypersetup{
     pdftitle={\pn@doctitle},
     pdfauthor={\pn@associationname},

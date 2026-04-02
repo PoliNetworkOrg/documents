@@ -20,7 +20,12 @@
 \newcommand{\pn@email}{info@polinetwork.org}
 \newcommand{\pn@pec}{polinetwork@pec.it}
 \newcommand{\pn@privacyemail}{privacy@polinetwork.org}
-\newcommand{\pn@website}{https://polinetwork.org}
+\newcommand{\pn@website}{polinetwork.org}
+\newcommand{\pn@websiteurl}{https://polinetwork.org}
+\newcommand{\pn@instagram}{@polinetwork}
+\newcommand{\pn@instagramurl}{https://www.instagram.com/polinetwork_/}
+\newcommand{\pn@telegrambot}{@PoliNetwork3bot}
+\newcommand{\pn@telegramurl}{https://t.me/PoliNetwork3bot}
 \newcommand{\pn@president}{}
 \newcommand{\pn@logopath}{assets/Logo}  % without extension, will try .pdf then .png
 \newcommand{\pn@signaturepath}{}
@@ -29,6 +34,7 @@
 \newcommand{\pn@doctitle}{}
 \newcommand{\pn@docsubtitle}{}
 \newcommand{\pn@docdate}{\today}
+\newcommand{\pn@doclabel}{}
 \newcommand{\pn@docprotocol}{}
 \newcommand{\pn@docsubject}{}
 \newcommand{\pn@docrecipient}{}
@@ -43,12 +49,34 @@
 \newcommand{\pnPEC}[1]{\renewcommand{\pn@pec}{#1}}
 \newcommand{\pnPrivacyEmail}[1]{\renewcommand{\pn@privacyemail}{#1}}
 \newcommand{\pnWebsite}[1]{\renewcommand{\pn@website}{#1}}
+\newcommand{\pnWebsiteUrl}[1]{\renewcommand{\pn@websiteurl}{#1}}
+\newcommand{\pnInstagram}[1]{\renewcommand{\pn@instagram}{#1}}
+\newcommand{\pnInstagramUrl}[1]{\renewcommand{\pn@instagramurl}{#1}}
+\newcommand{\pnTelegramBot}[1]{\renewcommand{\pn@telegrambot}{#1}}
+\newcommand{\pnTelegramUrl}[1]{\renewcommand{\pn@telegramurl}{#1}}
 \newcommand{\pnPresident}[1]{\renewcommand{\pn@president}{#1}}
 \newcommand{\pnLogo}[1]{\renewcommand{\pn@logopath}{#1}}
 \newcommand{\pnSignature}[1]{\renewcommand{\pn@signaturepath}{#1}}
 
 \newcommand{\pnTitle}[1]{\renewcommand{\pn@doctitle}{#1}}
 \newcommand{\pnSubtitle}[1]{\renewcommand{\pn@docsubtitle}{#1}}
+\newcommand{\pnDocLabel}[1]{\renewcommand{\pn@doclabel}{#1}}
+
+%% ========================================================================
+%% CONTACT LINK HELPERS
+%% ========================================================================
+
+\newcommand{\pnWebsiteLink}{%
+  \href{\pn@websiteurl}{\textcolor{pn-primary}{\texttt{\pn@website}}}%
+}
+
+\newcommand{\pnInstagramLink}{%
+  \href{\pn@instagramurl}{\textcolor{pn-primary}{\texttt{\pn@instagram}}}%
+}
+
+\newcommand{\pnTelegramLink}{%
+  \href{\pn@telegramurl}{\textcolor{pn-primary}{\texttt{\pn@telegrambot}}}%
+}
 
 %% ========================================================================
 %% MULTILINGUAL SUPPORT (IT / EN)
@@ -126,9 +154,38 @@
   {\poppinsmedium\fontsize{#1}{#1}\selectfont\color{pn-primary}PoliNetwork}%
 }
 
+\newcommand{\pnMetaPill}[1]{%
+  \tikz[baseline=(pill.base)]{
+    \node[
+      fill=pn-white,
+      draw=pn-blue-200,
+      rounded corners=12pt,
+      inner xsep=12pt,
+      inner ysep=5pt,
+      line width=0.4pt
+    ] (pill) {\footnotesize\labelfont\color{pn-primary}#1};
+  }%
+}
 
+\newcommand{\pnMetaLink}[2]{%
+  \tikz[baseline=(link.base)]{
+    \node[
+      fill=white,
+      fill opacity=0.82,
+      text opacity=1,
+      draw=pn-blue-100,
+      rounded corners=7pt,
+      inner xsep=12pt,
+      inner ysep=6pt,
+      line width=0.45pt
+    ] (link) {%
+      {\footnotesize\labelfont\color{pn-primary!80!pn-text}\textbf{#1}}\hspace{0.45em}%
+      {\footnotesize\dmsansfont\color{pn-primary}#2}%
+    };
+  }%
+}
 
-% Make the document header (Awesome-CV Style)
+% Make the document header with website-inspired spacing and typography
 \newcommand{\pnMakeHeader}{%
   \vspace*{-1.5cm} % pull up slightly
   \begin{center}
@@ -141,8 +198,8 @@
       {\normalsize\color{pn-text-secondary}\poppinsfont\pn@docsubtitle}\\[6pt]
     }%
     {\small\color{pn-text-secondary}\poppinsfont
-      \href{\pn@website}{\pn@website}
-      \quad\textbf{|}\quad
+      \href{\pn@websiteurl}{\pn@website}
+      \quad{\color{pn-primary}\textbf{|}}\quad
       \href{mailto:\pn@email}{\pn@email}
     }
   \end{center}
@@ -208,15 +265,21 @@
   \noindent
   \begin{tikzpicture}
     \node[
-      draw=pn-sky-300,
-      fill=pn-sky-100,
-      rounded corners=4pt,
-      inner sep=10pt,
-      text width=\textwidth-24pt,
+      draw=pn-blue-100,
+      fill=white,
+      fill opacity=0.78,
+      text opacity=1,
+      rounded corners=12pt,
+      line width=0.4pt,
+      inner xsep=16pt,
+      inner ysep=13pt,
+      text width=\dimexpr\textwidth-34pt\relax,
       align=left
-    ] {%
+    ] (box) {%
       \color{pn-text}#1%
     };
+    \fill[rounded corners=6pt, pn-primary]
+      ($(box.north west)+(0.24,-0.26)$) rectangle ($(box.south west)+(0.08,0.26)$);
   \end{tikzpicture}
   \vspace{8pt}
 }
@@ -224,6 +287,29 @@
 % Inline highlight
 \newcommand{\pnHighlight}[1]{%
   \textcolor{pn-primary}{\textbf{#1}}%
+}
+
+\newcommand{\pnLead}[1]{%
+  {\large\color{pn-text-secondary}\dmsansfont #1\par}%
+}
+
+\newcommand{\pnInfoCard}[2]{%
+  \begin{tikzpicture}
+    \node[
+      draw=pn-slate-200,
+      fill=pn-white,
+      rounded corners=12pt,
+      line width=0.5pt,
+      inner xsep=14pt,
+      inner ysep=12pt,
+      text width=\dimexpr\linewidth-34pt\relax,
+      align=left
+    ] {%
+      {\large\headlinefont\color{pn-primary}\textbf{#1}}\par
+      \vspace{6pt}
+      {\color{pn-text}#2}
+    };
+  \end{tikzpicture}%
 }
 
 %% ========================================================================

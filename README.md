@@ -16,9 +16,9 @@ polinetwork-document/
 │   ├── DMSans-Variable.ttf        # DM Sans (corpo testo)
 │   ├── Poppins-Medium.ttf         # Poppins (titoli, wordmark)
 │   └── RedHatText-Variable.ttf    # Red Hat Text (label, didascalie)
-├── assets/                        # Logo e elementi grafici
-│   ├── Logo.png / Logo.svg        # Logo PoliNetwork
-│   └── *.svg                      # Elementi decorativi
+├── assets/                        # Asset grafici effettivamente usati
+│   ├── Logo.png                   # Logo PoliNetwork
+│   └── site-background-soft.png   # Sfondo pagina
 ├── documents/                     # Documenti sorgente reali
 │   ├── PoliNetwork.tex
 │   └── informativa-privacy-recruitment.tex
