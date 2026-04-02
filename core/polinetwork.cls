@@ -53,7 +53,10 @@
 \RequirePackage{unicode-math}
 
 % Typography
-\RequirePackage{microtype}
+% With XeLaTeX and TU-encoded OpenType fonts, protrusion triggers a large
+% amount of harmless warnings on Overleaf. Keep microtype enabled for spacing
+% and kerning, but disable protrusion for a cleaner build log.
+\RequirePackage[protrusion=false]{microtype}
 \RequirePackage{setspace}
 \RequirePackage{parskip}
 
@@ -93,8 +96,23 @@
 %% LOAD POLINETWORK PACKAGES
 %% ========================================================================
 
-\RequirePackage{polinetwork-colors}
-\RequirePackage{polinetwork-commands}
+\RequirePackage{../core/polinetwork-colors}
+\RequirePackage{../core/polinetwork-commands}
+
+%% ========================================================================
+%% PAGE BACKGROUND
+%% ========================================================================
+
+\newcommand{\pnPageBackground}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[white] (current page.south west) rectangle (current page.north east);
+    \IfFileExists{../assets/site-background-soft.png}{%
+      \node[anchor=center, inner sep=0pt]
+        at (current page.center)
+        {\includegraphics[width=1.08\paperwidth,height=1.04\paperheight]{../assets/site-background-soft.png}};
+    }{}%
+  \end{tikzpicture}%
+}
 
 %% ========================================================================
 %% PAGE BACKGROUND
@@ -117,7 +135,7 @@
 
 % DM Sans — primary body/display font
 \newfontfamily\dmsansfont{DMSans}[
-  Path           = fonts/,
+  Path           = ../fonts/,
   Extension      = .ttf,
   UprightFont    = *-Variable,
   BoldFont       = *-Variable,
@@ -131,7 +149,7 @@
 
 % Poppins — headlines & wordmark
 \newfontfamily\poppinsfont{Poppins}[
-  Path           = fonts/,
+  Path           = ../fonts/,
   Extension      = .ttf,
   UprightFont    = *-Regular,
   BoldFont       = *-Bold,
@@ -142,13 +160,13 @@
 ]
 
 \newfontfamily\poppinsmedium{Poppins-Medium}[
-  Path           = fonts/,
+  Path           = ../fonts/,
   Extension      = .ttf,
 ]
 
 % Red Hat Text — labels, captions, small text
 \newfontfamily\redhattextfont{RedHatText}[
-  Path           = fonts/,
+  Path           = ../fonts/,
   Extension      = .ttf,
   UprightFont    = *-Variable,
   BoldFont       = *-Variable,
@@ -162,7 +180,7 @@
 
 % Set main document fonts
 \setmainfont{DMSans}[
-  Path           = fonts/,
+  Path           = ../fonts/,
   Extension      = .ttf,
   UprightFont    = *-Variable,
   BoldFont       = *-Variable,
@@ -210,7 +228,7 @@
   {\Large\poppinsfont\bfseries\color{pn-text}}
   {\thesection\hspace{6pt}}
   {0pt}
-  {\phantomsection}[\vspace{-0.55em}{\color{pn-rule}\rule{\textwidth}{0.8pt}}]
+  {}[\vspace{-0.55em}{\color{pn-rule}\rule{\textwidth}{0.8pt}}]
 
 \titleformat{\subsection}
   {\large\poppinsfont\bfseries\color{pn-primary}}
