@@ -25,7 +25,7 @@ output/
 Thumbs.db
 
 # IDE
-.vscode/
 .idea/
 *.swp
 *~
+.texbuild
