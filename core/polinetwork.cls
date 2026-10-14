@@ -194,6 +194,10 @@
 \emergencystretch=3em
 \raggedbottom
 
+% Evita che la parola sia spezzata a fine riga
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+
 % Line color for body text
 \color{pn-text}
 
