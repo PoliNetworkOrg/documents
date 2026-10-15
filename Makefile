@@ -10,6 +10,7 @@
 #   make privacy-recruitment  Compila la privacy policy del recruitment
 #   make about                Compila il documento "Cos'è PoliNetwork"
 #   make all                  Compila tutti i documenti
+#   make html-<nome>          Esporta documents/<nome>.tex in HTML (richiede pandoc)
 #   make clean                Pulisce i file ausiliari
 #
 # =====================================================================
@@ -34,11 +35,24 @@ define compile
 	@echo "✓ Generato: output/$(2).pdf"
 endef
 
+# --- Export HTML (pandoc >= 3.0) ---
+# I comandi della classe sono tradotti da core/html/polinetwork-macros.tex,
+# lo stile da core/html/polinetwork.css. Il risultato e' un unico file HTML
+# autocontenuto: CSS, font (woff2 ridotti al solo alfabeto latino) e logo
+# sono incorporati nella pagina.
+PANDOC = pandoc
+HTML_SRC := $(ROOT_DIR)/core/html
+HTML_OUT := $(OUT_DIR)/html
+
+# Numerazione delle sezioni come nel PDF: solo con le opzioni legal/report/numbered
+html_numbered = $(shell grep -lE '^\\documentclass\[([^]]*,)? *(legal|report|numbered) *[],]' $(1))
+html_lang = $(if $(shell grep -l '\\pnSetEnglish' $(1)),en,it)
+
 # =====================================================================
 # TARGET PRINCIPALI
 # =====================================================================
 
-.PHONY: all clean clean-pdf help
+.PHONY: all clean clean-pdf help html-%
 
 help: ## Mostra questo aiuto
 	@echo ""
@@ -51,6 +65,7 @@ help: ## Mostra questo aiuto
 	@echo ""
 	@echo "  Utility:"
 	@echo "    make all                    Compila tutti i documenti"
+	@echo "    make html-<nome>            Esporta documents/<nome>.tex in HTML (output/html/)"
 	@echo "    make clean                  Pulisce file ausiliari (.aux, .log, ecc.)"
 	@echo "    make clean-pdf              Pulisce anche i PDF generati"
 	@echo ""
@@ -77,6 +92,18 @@ polinetwork: ## Cos'è PoliNetwork
 # 	$(call compile,documents,privacy-policy-sito)
 
 all: privacy-recruitment polinetwork ## Compila tutti i documenti
+
+html-%: documents/%.tex ## Esporta un documento in HTML (es. make html-privacy-policy-principale)
+	@mkdir -p $(HTML_OUT)
+	$(PANDOC) -f latex -t html5 --standalone --embed-resources \
+		--resource-path=$(HTML_SRC) \
+		--template=$(HTML_SRC)/polinetwork.html \
+		--lua-filter=$(HTML_SRC)/polinetwork.lua \
+		--shift-heading-level-by=1 \
+		$(if $(call html_numbered,$<),--number-sections) \
+		-M lang=$(call html_lang,$<) \
+		$(HTML_SRC)/polinetwork-macros.tex $< -o $(HTML_OUT)/$*.html
+	@echo "✓ Generato: output/html/$*.html"
 
 # =====================================================================
 # PULIZIA

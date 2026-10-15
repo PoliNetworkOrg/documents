@@ -73,6 +73,34 @@ make clean
 
 Tutti i PDF vengono creati nella cartella `output/`.
 
+### Esportare in HTML
+
+Serve [pandoc](https://pandoc.org) 3.0 o successivo (`brew install pandoc` /
+`pacman -S pandoc`). Non serve LaTeX.
+
+```bash
+make html-privacy-policy-principale
+```
+
+Il comando crea `output/html/<nome>.html`: un unico file autocontenuto (circa
+190 KB) con CSS, font e logo incorporati, da pubblicare così com'è. Non carica
+nessuna risorsa esterna. I file di stile stanno in `core/html/`:
+
+- `polinetwork.css`: font, palette e gerarchia dei titoli, ripresi dalla classe;
+- `polinetwork.html`: template della pagina (header e footer);
+- `fonts/*.woff2`: DM Sans e Poppins ridotti all'alfabeto latino, per tenere
+  leggera la pagina. Generati da `fonts/*.ttf` con
+  `pyftsubset <font>.ttf --unicodes='U+0000-024F,U+2000-206F,U+20AC,U+2122,U+2190-2193,U+2212' --layout-features='*' --flavor=woff2`
+  (pacchetto `fonttools[woff]`);
+- `logo.png`: logo ridimensionato a 128 px;
+- `polinetwork-macros.tex`: traduce i comandi `\pn...` per pandoc. Se un
+  documento usa un nuovo comando della classe, va aggiunto qui;
+- `polinetwork.lua`: fa diventare `{\small ...}` un paragrafo `.small`.
+
+La numerazione delle sezioni segue le opzioni `legal`/`report`/`numbered` della
+classe e la lingua della pagina segue `\pnSetEnglish`. Gli elementi grafici in
+TikZ (box, card, pill) non vengono convertiti.
+
 ## Workflow AI to LaTeX
 
 Il file `prompt.md` e' il prompt canonico da dare a un'AI quando vuoi

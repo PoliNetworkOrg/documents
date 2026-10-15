@@ -1,0 +1,25 @@
+%% polinetwork-macros.tex
+%% Definizioni per pandoc: traducono i comandi di polinetwork.cls e
+%% polinetwork-commands.sty in costrutti che il reader LaTeX di pandoc capisce.
+%% Viene anteposto al documento solo nella build HTML (make html-<nome>).
+
+% Metadati: finiscono nell'header del template HTML
+\newcommand{\pnTitle}[1]{\title{#1}}
+\newcommand{\pnSubtitle}[1]{\subtitle{#1}}
+\newcommand{\pnDate}[1]{\date{#1}}
+\newcommand{\pnMakeHeader}{}
+\newcommand{\pnMakeTitlePage}{}
+\newcommand{\pnMakeMetadata}{}
+\newcommand{\pnSetEnglish}{}
+\newcommand{\pnSetItalian}{}
+
+% pandoc scarta il gruppo che segue \noindent (es. \noindent{\small ...})
+\renewcommand{\noindent}{}
+
+% Link e testo
+\newcommand{\pnHighlight}[1]{\textbf{#1}}
+\newcommand{\pnWebsiteLink}{\href{https://polinetwork.org}{polinetwork.org}}
+\newcommand{\pnInstagramLink}{\href{https://www.instagram.com/polinetwork_/}{@polinetwork}}
+\newcommand{\pnTelegramLink}{\href{https://t.me/PoliNetwork3bot}{@PoliNetwork3bot}}
+\newcommand{\pnLead}[1]{#1}
+\newcommand{\pnRule}{}
