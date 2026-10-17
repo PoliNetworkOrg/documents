@@ -130,17 +130,15 @@
 %% ========================================================================
 
 % DM Sans — primary body/display font
+% Static instances generated from the variable fonts (XeTeX ignores
+% NamedInstance on fonts loaded by path, so bold would render as regular).
 \newfontfamily\dmsansfont{DMSans}[
   Path           = fonts/,
   Extension      = .ttf,
-  UprightFont    = *-Variable,
-  BoldFont       = *-Variable,
-  ItalicFont     = *-Variable-Italic,
-  BoldItalicFont = *-Variable-Italic,
-  UprightFeatures= {NamedInstance=Regular},
-  BoldFeatures   = {NamedInstance=Bold},
-  ItalicFeatures = {NamedInstance=Italic},
-  BoldItalicFeatures = {NamedInstance=Bold Italic},
+  UprightFont    = *-Regular,
+  BoldFont       = *-Bold,
+  ItalicFont     = *-Italic,
+  BoldItalicFont = *-BoldItalic,
 ]
 
 % Poppins — headlines & wordmark
@@ -164,28 +162,20 @@
 \newfontfamily\redhattextfont{RedHatText}[
   Path           = fonts/,
   Extension      = .ttf,
-  UprightFont    = *-Variable,
-  BoldFont       = *-Variable,
-  ItalicFont     = *-Variable-Italic,
-  BoldItalicFont = *-Variable-Italic,
-  UprightFeatures= {NamedInstance=Regular},
-  BoldFeatures   = {NamedInstance=Bold},
-  ItalicFeatures = {NamedInstance=Italic},
-  BoldItalicFeatures = {NamedInstance=Bold Italic},
+  UprightFont    = *-Regular,
+  BoldFont       = *-Bold,
+  ItalicFont     = *-Italic,
+  BoldItalicFont = *-BoldItalic,
 ]
 
 % Set main document fonts
 \setmainfont{DMSans}[
   Path           = fonts/,
   Extension      = .ttf,
-  UprightFont    = *-Variable,
-  BoldFont       = *-Variable,
-  ItalicFont     = *-Variable-Italic,
-  BoldItalicFont = *-Variable-Italic,
-  UprightFeatures= {NamedInstance=Regular},
-  BoldFeatures   = {NamedInstance=Bold},
-  ItalicFeatures = {NamedInstance=Italic},
-  BoldItalicFeatures = {NamedInstance=Bold Italic},
+  UprightFont    = *-Regular,
+  BoldFont       = *-Bold,
+  ItalicFont     = *-Italic,
+  BoldItalicFont = *-BoldItalic,
 ]
 
 % Aliases for use in commands.sty
@@ -203,6 +193,10 @@
 \tolerance=1000
 \emergencystretch=3em
 \raggedbottom
+
+% Evita che la parola sia spezzata a fine riga
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
 
 % Line color for body text
 \color{pn-text}

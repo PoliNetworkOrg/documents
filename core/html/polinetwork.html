@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="$lang$">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="PoliNetwork APS">
+  <title>$pagetitle$ — PoliNetwork</title>
+$if(subtitle)$
+  <meta name="description" content="$subtitle$">
+$endif$
+  <link rel="icon" href="logo.png">
+  <link rel="stylesheet" href="polinetwork.css">
+</head>
+<body>
+  <main class="pn-document">
+    <header class="pn-header">
+      <h1 class="pn-title">$title$</h1>
+$if(subtitle)$
+      <p class="pn-subtitle">$subtitle$</p>
+$endif$
+$if(date)$
+      <p class="pn-date">$date$</p>
+$endif$
+    </header>
+$body$
+  </main>
+  <footer class="pn-footer">
+    <div class="pn-identity">
+      <img src="logo.png" alt="" width="28" height="28">
+      <div>
+        <span class="pn-wordmark">PoliNetwork</span>
+        <a href="mailto:direttivo@polinetwork.org">direttivo@polinetwork.org</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,167 @@
+/* polinetwork.css
+ * PoliNetwork APS — stile HTML dei documenti.
+ * Riproduce polinetwork.cls / polinetwork-colors.sty per il web: stessi font,
+ * stessa palette, stessa gerarchia dei titoli.
+ */
+
+@font-face { font-family: "DM Sans"; src: url("fonts/DMSans-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "DM Sans"; src: url("fonts/DMSans-Italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "DM Sans"; src: url("fonts/DMSans-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "DM Sans"; src: url("fonts/DMSans-BoldItalic.woff2") format("woff2"); font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: "Poppins"; src: url("fonts/Poppins-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Poppins"; src: url("fonts/Poppins-SemiBold.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Poppins"; src: url("fonts/Poppins-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+
+:root {
+  /* polinetwork-colors.sty */
+  --pn-primary: #1156ae;        /* pn-logo-blue */
+  --pn-text: #0f172a;           /* pn-slate-900 */
+  --pn-text-secondary: #475569; /* pn-slate-600 */
+  --pn-text-muted: #94a3b8;     /* pn-slate-400 */
+  --pn-border: #e2e8f0;         /* pn-slate-200 */
+
+  --pn-font-body: "DM Sans", system-ui, sans-serif;
+  --pn-font-headline: "Poppins", system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--pn-text);
+  font-family: var(--pn-font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.pn-document,
+.pn-footer {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.pn-document { padding-top: 4rem; padding-bottom: 3rem; }
+
+/* \pnMakeHeader */
+.pn-header { margin-bottom: 1.5rem; }
+
+.pn-title {
+  margin: 0;
+  color: var(--pn-primary);
+  font-family: var(--pn-font-headline);
+  font-weight: 700;
+  font-size: clamp(2rem, 6vw, 2.6rem);
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.pn-subtitle {
+  margin: 0.5rem 0 0;
+  font-family: var(--pn-font-headline);
+  font-weight: 600;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+.pn-date,
+.small {
+  color: var(--pn-text-secondary);
+  font-size: 0.9rem;
+}
+
+.pn-date { margin: 0.75rem 0 0; }
+.small p { margin-top: 0; }
+
+/* \titleformat: section / subsection / subsubsection */
+h2, h3, h4 {
+  font-family: var(--pn-font-headline);
+  line-height: 1.3;
+  scroll-margin-top: 1.5rem;
+  text-wrap: balance;
+}
+
+h2 {
+  margin: 2.5rem 0 0.75rem;
+  color: var(--pn-primary);
+  font-weight: 700;
+  font-size: 1.45rem;
+}
+
+h3 {
+  margin: 1.75rem 0 0.5rem;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+h4 {
+  margin: 1.25rem 0 0.4rem;
+  color: var(--pn-text-secondary);
+  font-weight: 600;
+  font-size: 1.0625rem;
+}
+
+.header-section-number { margin-right: 0.65em; font-variant-numeric: tabular-nums; }
+
+p { margin: 0 0 0.75rem; }
+
+a {
+  color: var(--pn-primary);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+a:hover { text-decoration-thickness: 2px; }
+
+strong { font-weight: 700; }
+
+/* \setlist[itemize]: piccolo pallino blu */
+ul, ol { margin: 0.4rem 0 0.9rem; padding-left: 2em; }
+li { margin-bottom: 0.35rem; }
+li > p { margin: 0; }
+ul > li::marker { color: var(--pn-primary); font-size: 0.8em; }
+
+/* Footer: \pnFooterIdentity */
+.pn-footer {
+  padding-top: 1.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.pn-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--pn-border);
+}
+
+.pn-identity div { display: flex; flex-direction: column; line-height: 1.25; }
+
+.pn-wordmark {
+  color: var(--pn-primary);
+  font-family: var(--pn-font-headline);
+  font-weight: 500;
+}
+
+.pn-identity a {
+  color: var(--pn-text);
+  font-family: var(--pn-font-headline);
+  font-size: 0.75rem;
+  text-decoration: none;
+}
+
+.pn-identity a:hover { text-decoration: underline; }
+
+@media print {
+  .pn-document { padding-top: 0; }
+  a { color: inherit; }
+}

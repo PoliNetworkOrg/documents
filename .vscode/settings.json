@@ -1,0 +1,3 @@
+{
+  "texPreview.buildCommand": "cd .. && TEXINPUTS=\"./core//:\" latexmk -g -lualatex -interaction=nonstopmode -synctex=1 -outdir=%OUTDIR% %DOC%"
+}
